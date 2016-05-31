@@ -40,11 +40,15 @@ public class SiemensFormTest {
 		pageContainer.clickSubmitButton();
 		
 		try {
-			Thread.sleep(4000);
+			Thread.sleep(5000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}		
-		assertEquals("Last name is required.", pageContainer.getNameAlert());
+		assertEquals("First name is required.", pageContainer.getNameAlert());
+		assertEquals("Last name is required.", pageContainer.getLastNameAlert());
+		assertEquals("E-mail is required. E-mail has to be of format 'text@text.text'.", pageContainer.getEmailAlert());
+		assertEquals("Company/Organisation is required.", pageContainer.getCompanyAlert());
+		assertEquals("Message is required.", pageContainer.getMessageAlert());
 		
 		driver.close();
 	}
@@ -70,7 +74,7 @@ public class SiemensFormTest {
 		
 		assertNotNull("The field is not visible", pageContainer.fillName("Name"));
 		assertNotNull("The field is not visible", pageContainer.fillLastName("lastName"));
-		assertNotNull("The field is not visible", pageContainer.fillEmail("email_do"));
+		assertNotNull("The field is not visible", pageContainer.fillEmail("email_br@"));
 		assertNotNull("The field is not visible", pageContainer.fillCompany("company"));
 		assertNotNull("The field is not visible", pageContainer.fillMessage("Lorem ipsum dolor sit amet"));
 	}
