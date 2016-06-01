@@ -3,16 +3,25 @@ package test;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ErrorCollector;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-import page.SiemensFormPage;
+import page.SiemensENFormsPage;
 
-public class SiemensFormTest {
+public class SiemensENFormsTest {
 	static String name;
-	static SiemensFormPage pageContainer;
+	static SiemensENFormsPage pageContainer;
 	private FirefoxDriver driver;
 
+/*	
+ 	* The ErrorCollector rule allows execution of a test to 
+ 	*	continue after the first problem is found 
+*/
+	@Rule
+	public ErrorCollector errorCollector = new ErrorCollector();
+	
 	@Before
 	public void starter() {
 		this.driver = new FirefoxDriver();
@@ -20,7 +29,6 @@ public class SiemensFormTest {
 		driver.manage().window().maximize();
 	}
 
-	
 	@Test
 	public void testAlert(){
 		try {
@@ -29,7 +37,7 @@ public class SiemensFormTest {
 			e.printStackTrace();
 		}
 		
-		SiemensFormPage pageContainer = new SiemensFormPage(driver);
+		SiemensENFormsPage pageContainer = new SiemensENFormsPage(driver);
 		pageContainer.clickContactButton();
 		
 		try {
@@ -37,25 +45,43 @@ public class SiemensFormTest {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		
 		pageContainer.clickSubmitButton();
 		
 		try {
 			Thread.sleep(5000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
-		}		
-		assertEquals("First name is required.", pageContainer.getNameAlert());
-		assertEquals("Last name is required.", pageContainer.getLastNameAlert());
-		assertEquals("E-mail is required. E-mail has to be of format 'text@text.text'.", pageContainer.getEmailAlert());
-		assertEquals("Company/Organisation is required.", pageContainer.getCompanyAlert());
-		assertEquals("Message is required.", pageContainer.getMessageAlert());
+		}
+		
+		try {assertEquals("First name is required.", pageContainer.getNameAlert());
+		}catch(AssertionError e){
+			errorCollector.addError(e);
+		}
+		try{assertEquals("Last name is required.", pageContainer.getLastNameAlert());
+		}catch(AssertionError e){
+			errorCollector.addError(e);
+		}
+		try{assertEquals("E-mail is required. E-mail has to be of format 'text@text.text'.", pageContainer.getEmailAlert());
+		}catch(AssertionError e){
+			errorCollector.addError(e);
+		}
+		try{assertEquals("Company/Organisation is required.", pageContainer.getCompanyAlert());
+		}catch(AssertionError e){
+			errorCollector.addError(e);
+		}
+		try{assertEquals("Your message is required.", pageContainer.getMessageAlert());
+		}catch(AssertionError e){
+			errorCollector.addError(e);
+		}
+		
 		
 		driver.close();
 	}
 	
 	@Test
 	public void fillFields() {
-		SiemensFormPage pageContainer = new SiemensFormPage(driver);
+		SiemensENFormsPage pageContainer = new SiemensENFormsPage(driver);
 		pageContainer.clickContactButton();
 		try {
 			Thread.sleep(3000);
@@ -66,11 +92,12 @@ public class SiemensFormTest {
 		}
 		fillFieldsTest();
 		pageContainer.clickSubmitButton();
+		driver.close();
 
 	}
 
 	public void fillFieldsTest() {
-		SiemensFormPage pageContainer = new SiemensFormPage(driver);
+		SiemensENFormsPage pageContainer = new SiemensENFormsPage(driver);
 		
 		assertNotNull("The field is not visible", pageContainer.fillName("Name"));
 		assertNotNull("The field is not visible", pageContainer.fillLastName("lastName"));

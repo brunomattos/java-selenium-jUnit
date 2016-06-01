@@ -4,7 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class SiemensFormPage {
+public class SiemensENFormsPage {
 	private WebDriver driver;
 	
 	By contactButton = By.id("cc_4");
@@ -23,7 +23,7 @@ public class SiemensFormPage {
 	
 	WebElement formContainer;
 	
-	public SiemensFormPage(WebDriver driver){
+	public SiemensENFormsPage(WebDriver driver){
 		this.driver = driver;
 	}
 	
@@ -40,40 +40,40 @@ public class SiemensFormPage {
 		driver.get("http://www.ad.siemens.com.cn/ingenuity-for-life/cn_en/index.html");
 	}
 	
-	public SiemensFormPage(){
+	public SiemensENFormsPage(){
 		formContainer = driver.findElement(formContainerFinder);
 	}
 	
-	public SiemensFormPage (By formContainerFinder){
+	public SiemensENFormsPage (By formContainerFinder){
 		this.formContainerFinder = formContainerFinder;
 	}
 	
 	//Methods finders
-	public SiemensFormPage clickContactButton(){
+	public SiemensENFormsPage clickContactButton(){
 		driver.findElement(contactButton).click();
 		return this;
 	}
-	public SiemensFormPage fillName(String name){
+	public SiemensENFormsPage fillName(String name){
 		driver.findElement(firstNameFinder).sendKeys(name);
 		return this;
 	}
-	public SiemensFormPage fillLastName(String lastName){
+	public SiemensENFormsPage fillLastName(String lastName){
 		driver.findElement(lastNameFinder).sendKeys(lastName);
 		return this;
 	}
-	public SiemensFormPage fillEmail(String email){
+	public SiemensENFormsPage fillEmail(String email){
 		driver.findElement(emailFinder).sendKeys(email);
 		return this;
 	}
-	public SiemensFormPage fillCompany(String company){
+	public SiemensENFormsPage fillCompany(String company){
 		driver.findElement(companyFinder).sendKeys(company);
 		return this;
 	}
-	public SiemensFormPage fillMessage(String message){
+	public SiemensENFormsPage fillMessage(String message){
 		driver.findElement(messageFinder).sendKeys(message);
 		return this;
 	}
-	public SiemensFormPage clickSubmitButton(){
+	public SiemensENFormsPage clickSubmitButton(){
 		driver.findElement(submitButton).click();
 		return this;
 	}
